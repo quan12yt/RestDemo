@@ -1,52 +1,46 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Transactions;
-import com.example.demo.repository.TransactionRepository;
 import com.example.demo.exception.TransactionNotFoundException;
+import com.example.demo.services.TransactionServiceImp;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
-@RestController("api/transactions")
+@RestController()
+@RequestMapping("api/transactions")
 public class TransactionsController{
-    private final TransactionRepository transactionRepository;
+    @Autowired
+    private final TransactionServiceImp transactionServiceImp;
 
-    public TransactionsController(TransactionRepository transactionRepository) {
-        this.transactionRepository = transactionRepository;
+    public TransactionsController(TransactionServiceImp transactionServiceImp){
+        this.transactionServiceImp = transactionServiceImp;
     }
-
+    //get list of transactions
     @GetMapping("")
     public List<Transactions> getTransactions(){
-        return transactionRepository.findAll();
+        return transactionServiceImp.getALLTrans();
     }
-
+    //get a transaction by its id
     @GetMapping("/{id}")
-    public Transactions getOneT(@PathVariable Long id){
-        return transactionRepository.findById(id).orElseThrow(() ->
-                {
-                    return new TransactionNotFoundException(id);
-                }
-                );
+    public Optional<Transactions> getOneT(@PathVariable Long id){
+        return transactionServiceImp.findTransactionById(id);
     }
-
+    //create a new transaction
     @PostMapping("")
     public Transactions postTran(@RequestBody Transactions transactions){
-        return  transactionRepository.save(transactions);
+        return  transactionServiceImp.insertTran(transactions);
     }
-
+    //Update existed transaction or new one if not existed
     @PutMapping("/{id}")
     public Transactions putTran(@RequestBody Transactions tran,@PathVariable Long id){
-        return transactionRepository.findById(id).map(transactions -> {
-            transactions.setAmount(tran.getAmount());
-            transactions.setBank(tran.getBank());
-            transactions.setTransactionType(tran.getTransactionType());
-            return transactionRepository.save(transactions);
-        }).orElseGet(() -> {
-            return transactionRepository.save(tran);
-        });
+        return transactionServiceImp.updateTransaction(tran,id);
     }
+    //remove a transaction by its id
     @DeleteMapping("/{id}")
     public void deleteTran(@PathVariable Long id){
-        transactionRepository.deleteById(id);
+        transactionServiceImp.deleteTransaction(id);
     }
 }

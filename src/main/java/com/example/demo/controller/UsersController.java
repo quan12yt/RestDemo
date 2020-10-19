@@ -1,73 +1,48 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Users;
-import com.example.demo.repository.UserRepository;
-import com.example.demo.exception.UserNotFoundException;
-import org.springframework.hateoas.EntityModel;
+import com.example.demo.services.UserServiceImp;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.io.Serializable;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.Optional;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-@RestController("/api/users")
+@RestController()
+@RequestMapping("/api/users")
 public class UsersController implements Serializable {
-    private final AtomicLong counter = new AtomicLong();
-    private final UserRepository userRepository;
+    @Autowired
+    private final UserServiceImp userServiceImp;
 
-    public UsersController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UsersController(UserServiceImp userServiceImp) {
+        this.userServiceImp = userServiceImp;
     }
-
     //return list of users
-    @GetMapping("/api/users")
+    @GetMapping("")
     public List<Users> getAll() {
 //        return userRepository.findByIdAndAddress((long) 2,"Ho Chi Minh");
-        return userRepository.findAll();
+        return userServiceImp.getALLUsers();
     }
-
-
     //create new user
-    @PostMapping("/api/users")
+    @PostMapping("")
     public Users postUser(@RequestBody Users u) {
-        return userRepository.save(u);
+        return userServiceImp.insertUser(u);
     }
-
     //get an  users by id
-    @GetMapping("/api/users/{id}")
-    public EntityModel<Users> getOne(@PathVariable Long id) {
-        Users u= userRepository.findById(id).orElseThrow(() ->
-                {
-                    return  new UserNotFoundException(id);
-                }
-                );
-        return  EntityModel.of(u,
-                linkTo(methodOn(UsersController.class).getOne(id)).withSelfRel(),
-                linkTo(methodOn(UsersController.class).getAll()).withRel("users"));
+    @GetMapping("/{id}")
+    public Optional<Users> getOne(@PathVariable Long id) {
+        return userServiceImp.findUserById(id);
     }
-
     //update an existed users or create new user
-    @PutMapping("api/users/{id}")
+    @PutMapping("/{id}")
     public Users putUser(@RequestBody Users u, @PathVariable Long id) {
-        return userRepository.findById(id).map(
-                users -> {
-                    users.setAddress(u.getAddress());
-                    users.setBirthday(u.getBirthday());
-                    users.setName(u.getName());
-                    return userRepository.save(users);
-                }
-        ).orElseGet(() -> {
-            return userRepository.save(u);
-        });
+        return userServiceImp.updateUser(u,id);
     }
-
     //delete an user
-    @DeleteMapping("api/users/{id}")
+    @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id) {
-        userRepository.deleteById(id);
+        userServiceImp.deleteUser(id);
     }
 }
 
