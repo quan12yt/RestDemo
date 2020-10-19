@@ -11,59 +11,59 @@ import java.sql.Date;
 public class Transactions {
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
 
-    private int user_id;
-    private int account_id;
-    private double amount;
+    private Long userId;
+    private Long accountId;
+    private Double amount;
     private String bank;
-    private String transaction_type;
-    private Date created_at;
+    private String transactionType;
+    private Date createdAt;
 
     public Transactions(){}
-    public Transactions( int user_id, int account_id, double amount, String bank, String transaction_type, Date created_at){
-        this.user_id = user_id;
-        this.account_id = account_id;
+    public Transactions( Long user_id, Long account_id, Double amount, String bank, String transaction_type, Date createdAt){
+        this.userId = user_id;
+        this.accountId = account_id;
         this.amount = amount;
         this.bank = bank;
-        this.transaction_type = transaction_type;
-        this.created_at = created_at;
+        this.transactionType = transaction_type;
+        this.createdAt = createdAt;
     }
     public Transactions(double amount, String bank, String transaction_type){
         this.amount = amount;
         this.bank = bank;
-        this.transaction_type = transaction_type;
+        this.transactionType = transaction_type;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public int getAccount_id() {
-        return account_id;
+    public Long getAccountId() {
+        return accountId;
     }
 
-    public void setAccount_id(int account_id) {
-        this.account_id = account_id;
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
     }
 
-    public double getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 
@@ -75,32 +75,32 @@ public class Transactions {
         this.bank = bank;
     }
 
-    public String getTransaction_type() {
-        return transaction_type;
+    public String getTransactionType() {
+        return transactionType;
     }
 
-    public void setTransaction_type(String transaction_type) {
-        this.transaction_type = transaction_type;
+    public void setTransactionType(String transactionType) {
+        this.transactionType = transactionType;
     }
 
     public  Date getCreate_at() {
-        return created_at;
+        return createdAt;
     }
 
     public void setCreate_at(Date create_at) {
-        this.created_at = create_at;
+        this.createdAt = create_at;
     }
 
     @Override
     public String toString() {
         return "Transactions{" +
                 "id=" + id +
-                ", user_id=" + user_id +
-                ", account_id=" + account_id +
+                ", user_id=" + userId +
+                ", account_id=" + accountId +
                 ", amount=" + amount +
                 ", bank='" + bank + '\'' +
-                ", transaction_type='" + transaction_type + '\'' +
-                ", create_at='" + created_at + '\'' +
+                ", transaction_type='" + transactionType + '\'' +
+                ", create_at='" + createdAt + '\'' +
                 '}';
     }
 

@@ -1,7 +1,7 @@
-package com.example.demo.security;
+package com.example.demo.exception;
 
 public class UserNotFoundException extends RuntimeException{
-    public UserNotFoundException(int id){
+    public UserNotFoundException(Long id){
         super("Could not find User :"+id);
     }
 }

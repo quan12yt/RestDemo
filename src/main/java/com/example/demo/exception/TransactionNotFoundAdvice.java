@@ -1,4 +1,4 @@
-package com.example.demo.security;
+package com.example.demo.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class UserNotFoundAdvice {
+public class TransactionNotFoundAdvice {
     @ResponseBody
-    @ExceptionHandler(UserNotFoundException.class)
+    @ExceptionHandler(TransactionNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String userNotFoundHandle(UserNotFoundException userNotFoundException){
-        return userNotFoundException.getMessage();
+    public String userNotFoundHandle(TransactionNotFoundException transactionNotFoundException){
+        return transactionNotFoundException.getMessage();
     }
 }

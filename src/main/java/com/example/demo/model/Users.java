@@ -11,7 +11,7 @@ import javax.persistence.Table;
 public class Users {
     @Id
     @GeneratedValue
-    private int user_id;
+    private Long userId;
 
     private String address;
     private String birthday;
@@ -25,12 +25,12 @@ public class Users {
         this.name=name;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getAddress() {
@@ -59,7 +59,7 @@ public class Users {
     @Override
     public String toString() {
         return "Users{" +
-                "user_id=" + user_id +
+                "user_id=" + userId +
                 ", address='" + address + '\'' +
                 ", birthday='" + birthday + '\'' +
                 ", name='" + name + '\'' +
