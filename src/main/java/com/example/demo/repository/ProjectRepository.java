@@ -8,3 +8,4 @@ import com.example.demo.model.Project;
 public interface ProjectRepository extends JpaRepository<Project, String> {
 
 }
+ 
