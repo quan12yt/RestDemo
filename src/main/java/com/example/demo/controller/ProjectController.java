@@ -24,7 +24,7 @@ public class ProjectController {
 	@GetMapping("")
 	public List<Project> findAllProject(){
 		return projectService.findAllProject();
-	}
+	} 
 	@PostMapping("/add")
 	public boolean saveProject(@RequestBody Project project) {
 		return projectService.saveProject(project);
